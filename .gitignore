@@ -134,6 +134,9 @@ node_modules/
 # vs code
 .vs/
 
+#packages
+package-lock.json
+package.json
 # config.py 
 config.py 
 __pycache__
