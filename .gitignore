@@ -131,9 +131,13 @@ dmypy.json
 # node modules
 node_modules/
 
-#vs code
+# vs code
 .vs/
 
 #packages
 package-lock.json
 package.json
+# config.py 
+config.py 
+__pycache__
+.ipynb_checkpoints
