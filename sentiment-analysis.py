@@ -33,13 +33,12 @@ def update_vader_lexicon(csvFile):
         word = row['Word']
         weight = row['Weight']
         words[word] = weight
-        print(words)
 
     globalAnalyzer.lexicon.update(words)
 
 def sentiment_analysis():
     update_vader_lexicon("cryptoWords.csv")
-    
+
     df = pd.read_csv("tweets.csv")
     TBpol = []
     Vpol = []
@@ -59,7 +58,6 @@ def sentiment_analysis():
     df['VRoundedPolarity'] = Vpol_rounded
 
     df.to_csv("sentiment.csv", sep=',')
-    print(df)
 
 
 sentiment_analysis()
