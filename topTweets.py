@@ -15,15 +15,16 @@ auth.set_access_token(access_token, access_token_secret)
 
 api = tweepy.API(auth)
 
-# fetch home timeline 
-public_tweets = api.home_timeline() 
+# fetch tweets 
+
+public_tweets = api.search_tweets(q='bitcoin', until='2022-01-09', count=50, result_type='popular')
 
 # create dataframe 
-cols = ['Time', 'User', 'Tweet']
+cols = ['Time', 'User', 'Retweets', 'Likes', 'Tweet']
 data = [] 
 for tweet in public_tweets: 
-    data.append([tweet.created_at, tweet.user.screen_name, tweet.text])
+    data.append([tweet.created_at, tweet.user.screen_name, tweet.retweet_count, tweet.favorite_count, tweet.text.encode('utf-8')])
 
 df = pd.DataFrame(data, columns=cols)
 
-df.to_csv('tweets.csv')
+df.to_csv('topTweets.csv')
