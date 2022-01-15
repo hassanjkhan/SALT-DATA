@@ -26,10 +26,28 @@ BULL RUN TIMELINES:
 2021: huge bull run to start, bear market from may-july, ended year on good bull run 
     Bull10: 2021-01-01 -> 2021-04-09 (~30,000 USD -> ~64,000 USD)
     Bull11: 2021-07-20 -> 2021-11-30 (~32,000 USD -> ~68,000 USD)
+
+BEAR RUN TIMELINES: 
+2018: 
+    Bear01: 2018-01-05 -> 2018-02-04 (~17,000 USD -> ~7000 USD)
+    Bear02: 2018-03-20 -> 20218-04-10 
+    Bear03: 2018-05-05 -> 2018-07-12 
+    Bear04: 2018-09-06 -> 2018-12-31 
+2019: 
+    Bear05: 2019-01-01 -> 2019-03-28 
+    Bear06: 2019-07-10 -> 2019-07-30 
+    Bear07: 2019-09-22 -> 2019-10-23 
+    Bear08: 2019-11-08 -> 2019-12-31 
+2020:
+    Bear09: 2020-02-22 -> 2020-03-15 
+2021:
+    Bear10: 2021-01-13 -> 2021-02-04 
+    Bear11: 2021-05-11 -> 2021-07-23 
+    Bear12: 2021-11-19 -> 2021-12-31 
 '''
 
 # configuration 
-months = range(7,12)
+months = range(11,13)
 
 for i in months:
     c = twint.Config() 
@@ -37,11 +55,11 @@ for i in months:
     c.Lang = "en"
     c.Limit = 3000
     if (i==months[0]):
-        c.Since = "2021-"+str(i)+"-20"
+        c.Since = "2021-"+str(i)+"-19"
     else:
         c.Since = "2021-"+str(i)+"-01"
-    if (i==months[4]):
-        c.Until = "2021-"+str(i)+"-30"
+    if (i==months[1]):
+        c.Until = "2021-"+str(i)+"-31"
     else:
         if(i==2):
             c.Until = "2021-"+str(i)+"-28"
@@ -50,7 +68,7 @@ for i in months:
     c.Min_likes = 100 
     c.Min_retweets = 100 
     c.Store_csv = True
-    c.Output = "topTweetsBull11-" + str(i) + ".csv"
+    c.Output = "topTweetsBear12-" + str(i) + ".csv"
 
     # running search
     twint.run.Search(c)
