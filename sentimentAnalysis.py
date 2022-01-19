@@ -14,6 +14,9 @@ def rounder(num):
     if num < -0.1: return -1
     return 0
 
+def lemmatization_of_sentence(sentence): # returns lemmatized sentence
+    return ""
+
 def remove_stop_words(sentence): # sentence is one string
     stopcorpus: typing.List = stopwords.words('english')
     sentenceList = sentence.split(" ")
@@ -46,11 +49,18 @@ def sentiment_analysis():
     Vpol_rounded = []
 
     for index, row in df.iterrows():
-        text = remove_stop_words(row['Text'])
-        TBpol.append(TextBlob(text).sentiment.polarity)
-        Vpol.append(globalAnalyzer.polarity_scores(text)['compound'])
-        TBpol_rounded.append(rounder(TextBlob(text).sentiment.polarity))
-        Vpol_rounded.append(rounder(globalAnalyzer.polarity_scores(text)['compound']))
+        text = row['Text']
+
+        # text preprocessing 
+        # add step 1 
+        lemmatizedSentence = lemmatization_of_sentence(text) # step 2
+        cleanedSentence = remove_stop_words(lemmatizedSentence) # step 3
+
+        # sentiment analysis
+        TBpol.append(TextBlob(cleanedSentence).sentiment.polarity)
+        Vpol.append(globalAnalyzer.polarity_scores(cleanedSentence)['compound'])
+        TBpol_rounded.append(rounder(TextBlob(cleanedSentence).sentiment.polarity))
+        Vpol_rounded.append(rounder(globalAnalyzer.polarity_scores(cleanedSentence)['compound']))
 
     df['TBPolarity'] = TBpol 
     df['VPolarity'] = Vpol
