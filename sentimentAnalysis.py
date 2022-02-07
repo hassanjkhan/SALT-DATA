@@ -3,6 +3,8 @@ from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer # https://p
 import pandas as pd # https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_csv.html
 import csv
 from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
+import nltk 
 import typing
 
 #https://towardsdatascience.com/two-sentiment-analysis-libraries-and-how-they-perform-3de4a06342ec
@@ -14,8 +16,15 @@ def rounder(num):
     if num < -0.1: return -1
     return 0
 
-def lemmatization_of_sentence(sentence): # returns lemmatized sentence
-    return ""
+def lemmatization_of_sentence(sentence): # returns lemmatized sentence 
+    sentenceList = sentence.split(" ")
+    lemmatizer = WordNetLemmatizer()
+    for word in sentenceList:
+        word = lemmatizer.lemmatize(word)
+
+def parts_of_speech(sentence):
+    tokens = nltk.word_tokenize(sentence)
+    print(nltk.pos_tag(tokens))
 
 def remove_stop_words(sentence): # sentence is one string
     stopcorpus: typing.List = stopwords.words('english')
@@ -69,7 +78,10 @@ def sentiment_analysis():
 
     df.to_csv("csvFiles/sentiment.csv", sep=',')
 
-print(globalAnalyzer.lexicon)
-sentiment_analysis()
+# print(globalAnalyzer.lexicon)
+# sentiment_analysis()
+
+# parts_of_speech("Coinbase user acquisition accelerated in the past two weeks to approx 1.2million/month run rate (ATH) Data: #bitcoin")
+# lemmatization_of_sentence("Coinbase user acquisition accelerated in the past two weeks to approx 1.2million/month run rate (ATH) Data: #bitcoin")
 
 #print(remove_stop_words("i love you"))
