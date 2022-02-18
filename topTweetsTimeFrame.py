@@ -1,8 +1,3 @@
-import config 
-import tweepy 
-import configparser 
-import pandas as pd  
-import datetime
 import twint # https://github.com/twintproject/twint
 
 
@@ -30,7 +25,7 @@ BULL RUN TIMELINES:
 BEAR RUN TIMELINES: 
 2018: 
     Bear01: 2018-01-05 -> 2018-02-04 (~17,000 USD -> ~7000 USD)
-    Bear02: 2018-03-20 -> 20218-04-10 
+    Bear02: 2018-03-20 -> 2018-04-10 
     Bear03: 2018-05-05 -> 2018-07-12 
     Bear04: 2018-09-06 -> 2018-12-31 
 2019: 
@@ -46,29 +41,35 @@ BEAR RUN TIMELINES:
     Bear12: 2021-11-19 -> 2021-12-31 
 '''
 
-# configuration 
-months = range(11,13)
+class topTweetsFetcher: 
+    
+    def __init__(self):
+        self.sinceBullDates = ["2017-04-01", "2017-10-20", "2018-02-01", "2018-04-05", "2019-04-01", "2019-07-20", "2019-10-18"
+        ,"2020-03-13", "2020-10-01", "2021-01-01", "2021-07-20"]
+        self.untilBullDates = ["2017-10-15", "2017-12-17", "2018-03-04", "2018-05-04", "2019-07-07", "2019-08-10", "2019-11-05"
+        ,"2020-08-30", "2020-12-31", "2021-04-09", "2021-11-30"]
 
-for i in months:
-    c = twint.Config() 
-    c.Search = "bitcoin"
-    c.Lang = "en"
-    c.Limit = 3000
-    if (i==months[0]):
-        c.Since = "2021-"+str(i)+"-19"
-    else:
-        c.Since = "2021-"+str(i)+"-01"
-    if (i==months[1]):
-        c.Until = "2021-"+str(i)+"-31"
-    else:
-        if(i==2):
-            c.Until = "2021-"+str(i)+"-28"
-        else:
-            c.Until = "2021-"+str(i)+"-30"
-    c.Min_likes = 100 
-    c.Min_retweets = 100 
-    c.Store_csv = True
-    c.Output = "topTweetsBear12-" + str(i) + ".csv"
+    def fetchTweets(self):
+        if len(self.sinceBullDates) != len(self.untilBullDates): 
+            return
+    
+        for i in range(0,len(self.sinceBullDates)):
+            c = twint.Config() 
 
-    # running search
-    twint.run.Search(c)
+            c.Search = "bitcoin"
+            c.Lang = "en"
+            c.Limit = 3000
+            c.Since = self.sinceBullDates[i]
+            c.Until = self.untilBullDates[i]
+            c.Min_likes = 100 
+            c.Min_retweets = 100 
+            c.Store_csv = True
+            c.Output = "topTweetsBull" + str(self.sinceBullDates[i]) + "-to-" + str(self.untilBullDates[i]) + ".csv"
+
+            twint.run.Search(c)
+
+    
+
+if __name__ == "__main__":
+    fetcher = topTweetsFetcher()
+    fetcher.fetchTweets()

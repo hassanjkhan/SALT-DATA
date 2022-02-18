@@ -1,8 +1,5 @@
-from tweepy.models import Status
 import config 
-import tweepy 
-import configparser 
-import pandas as pd  
+import tweepy  
 import csv 
 
 class TwitterStreamListener(tweepy.Stream): 
@@ -54,4 +51,4 @@ if __name__ == "__main__":
     api = tweepy.API(auth)
 
     listener = TwitterStreamListener(api_key, api_key_secret, access_token, access_token_secret)
-    listener.filter(track=['#covid','#Covid'])
+    listener.filter(track=['#bitcoin','#Bitcoin'])
